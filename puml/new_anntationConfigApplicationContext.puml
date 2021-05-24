@@ -1,0 +1,70 @@
+@startuml AnnotationConfigApplicationContext_bootastrap
+AnnotationConfigApplicationContext->DefaultListableBeanFactory:new
+AnnotationConfigApplicationContext->AnnotatedBeanDefinitionReader:new(this)
+AnnotatedBeanDefinitionReader->AnnotationConfigUtils:registerAnnotationConfigProcessors(context)
+AnnotationConfigUtils->DefaultListableBeanFactory:setDependencyComparator(AnnotationAwareOrderComparator.INSTANCE),setAutowireCandidateResolver(new ContextAnnotationAutowireCandidateResolver())
+AnnotationConfigUtils->AnnotationConfigApplicationContext:registerBeanDefinition
+AnnotationConfigApplicationContext->DefaultListableBeanFactory:registerBeanDefinition(RootBeanDef)
+AnnotationConfigApplicationContext-> ClassPathScanningCandidateComponentProvider:new(this)
+ClassPathScanningCandidateComponentProvider->ClassPathScanningCandidateComponentProvider:registerDefaultFilters
+@enduml
+
+@startuml registerBeanDefinition(RootBeanDef)
+start
+if (instanceof AbstractBeanDefinition?) then (yes)
+    :validate();
+endif
+if (beanDefinitionMap containsKey?) then (yes)
+    if(!isAllowBeanDefinitionOverriding()) then (yes)
+        :throw ext;
+        kill;
+    endif
+    :beanDefinitionMap.put(beanName, beanDefinition);
+else(no)
+    if(hasBeanCreationStarted()?) then(yes)
+        :beanDefinitionMap.put(beanName, beanDefinition);
+        :beanDefinitionNames.add(同步锁);
+        :manualSingletonNames.remove();
+    else(no)
+        :beanDefinitionMap.put(beanName, beanDefinition);
+        :beanDefinitionNames.add();
+        :manualSingletonNames.remove();
+    endif
+endif
+stop
+@enduml
+
+@startuml application_regist_class
+AnnotationConfigApplicationContext->AnnotatedBeanDefinitionReader:doRegisterBean
+AnnotatedBeanDefinitionReader->AnnotatedGenericBeanDefinition:new 生成bd
+AnnotatedGenericBeanDefinition->StandardAnnotationMetadata:from 关注 repeatableContainers
+StandardAnnotationMetadata->MergedAnnotations:from :关注 SearchStrategy
+MergedAnnotations->TypeMappedAnnotations:from 关注 annotationFilter
+AnnotatedBeanDefinitionReader->ConditionEvaluator: shouldSkip() conditional注解判断
+AnnotatedBeanDefinitionReader->ScopeMetadataResolver:resolveScopeMetadata 判断是否单例 是否需要代理
+AnnotatedBeanDefinitionReader->AnnotationBeanNameGenerator: 生成beanname
+AnnotatedBeanDefinitionReader->AnnotatedBeanDefinitionReader:读取lazy primary \n description role\n DependsOn 解析
+AnnotatedBeanDefinitionReader->BeanDefinitionReaderUtils: 注册bd 
+@enduml
+
+@startmindmap refresh
+* refresh
+** prepareRefresh
+*** initPropertySource
+*** getEnvironment().validateRequiredProperties()
+** obtainFreshBeanFactory
+*** refreshBeanFactory
+** postProcessBeanFactory
+** invokeBeanFactoryPostProcessors
+** registerBeanProstProcessors
+** initMessageSource
+** initApplicationEventMulticaster
+** onRefresh
+** registerListeners
+** finishBeanFactoryInitialization
+** finishRefresh
+*** clearResourceCaches
+*** initLifecycleProcessor
+*** getLifecycleProcessor().onRefresh
+*** publishEvent(new ContextRefreshedEvent(this))
+@endmindmap
