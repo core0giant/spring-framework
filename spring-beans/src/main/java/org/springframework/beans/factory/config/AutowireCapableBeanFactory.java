@@ -62,7 +62,7 @@ import org.springframework.lang.Nullable;
 public interface AutowireCapableBeanFactory extends BeanFactory {
 
 	/**
-	 * Constant that indicates no externally defined autowiring. Note that
+	 * 默认自动装配常数,Constant that indicates no externally defined autowiring. Note that
 	 * BeanFactoryAware etc and annotation-driven injection will still be applied.
 	 * @see #createBean
 	 * @see #autowire
@@ -71,8 +71,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	int AUTOWIRE_NO = 0;
 
 	/**
-	 * Constant that indicates autowiring bean properties by name
-	 * (applying to all bean property setters).
+	 * 以名称作为自动装配
 	 * @see #createBean
 	 * @see #autowire
 	 * @see #autowireBeanProperties
@@ -80,8 +79,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	int AUTOWIRE_BY_NAME = 1;
 
 	/**
-	 * Constant that indicates autowiring bean properties by type
-	 * (applying to all bean property setters).
+	 * 以属性作为自动装配
 	 * @see #createBean
 	 * @see #autowire
 	 * @see #autowireBeanProperties
@@ -89,29 +87,23 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	int AUTOWIRE_BY_TYPE = 2;
 
 	/**
-	 * Constant that indicates autowiring the greediest constructor that
-	 * can be satisfied (involves resolving the appropriate constructor).
+	 * 指示自动装配可以满足的最贪婪的构造函数的常数（涉及解析适当的构造函数）.
 	 * @see #createBean
 	 * @see #autowire
 	 */
 	int AUTOWIRE_CONSTRUCTOR = 3;
 
 	/**
-	 * Constant that indicates determining an appropriate autowire strategy
-	 * through introspection of the bean class.
+	 * 指示通过内省bean类确定适当的自动装配策略的常数。
 	 * @see #createBean
 	 * @see #autowire
-	 * @deprecated as of Spring 3.0: If you are using mixed autowiring strategies,
-	 * prefer annotation-based autowiring for clearer demarcation of autowiring needs.
+	 * @deprecated 从Spring 3.0开始：如果您使用混合自动装配策略，则更喜欢基于注解的自动装配，以更清楚地划分自动装配需求。
 	 */
 	@Deprecated
 	int AUTOWIRE_AUTODETECT = 4;
 
 	/**
-	 * Suffix for the "original instance" convention when initializing an existing
-	 * bean instance: to be appended to the fully-qualified bean class name,
-	 * e.g. "com.mypackage.MyClass.ORIGINAL", in order to enforce the given instance
-	 * to be returned, i.e. no proxies etc.
+	 * 初始化现有Bean实例时，“原始实例”约定的后缀：将附加到完全限定的Bean类名上，例如“ com.mypackage.MyClass.ORIGINAL”，以强制执行要返回的给定实例，即没有代理等。
 	 * @since 5.1
 	 * @see #initializeBean(Object, String)
 	 * @see #applyBeanPostProcessorsBeforeInitialization(Object, String)
@@ -121,7 +113,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 
 
 	//-------------------------------------------------------------------------
-	// Typical methods for creating and populating external bean instances
+	// 创建和填充外部Bean实例的典型方法
 	//-------------------------------------------------------------------------
 
 	/**
