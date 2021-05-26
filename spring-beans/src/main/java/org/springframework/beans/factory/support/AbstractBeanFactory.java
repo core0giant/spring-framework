@@ -306,7 +306,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
 				checkMergedBeanDefinition(mbd, beanName, args);
 
-				// Guarantee initialization of beans that the current bean depends on.
+				// 保证当前bean依赖的bean的初始化.
 				String[] dependsOn = mbd.getDependsOn();
 				if (dependsOn != null) {
 					for (String dep : dependsOn) {
@@ -682,7 +682,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	public Class<?> getType(String name, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
 		String beanName = transformedBeanName(name);
 
-		// Check manually registered singletons.
+		//检查手动注册的单例.
 		Object beanInstance = getSingleton(beanName, false);
 		if (beanInstance != null && beanInstance.getClass() != NullBean.class) {
 			if (beanInstance instanceof FactoryBean && !BeanFactoryUtils.isFactoryDereference(name)) {
@@ -693,10 +693,10 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 		}
 
-		// No singleton instance found -> check bean definition.
+		// 找不到单例实例->检查bean定义。
 		BeanFactory parentBeanFactory = getParentBeanFactory();
 		if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
-			// No bean definition found in this factory -> delegate to parent.
+			// 在此工厂中找不到bean定义->委托给父对象。
 			return parentBeanFactory.getType(originalBeanName(name));
 		}
 
@@ -761,7 +761,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 
 	//---------------------------------------------------------------------
-	// Implementation of HierarchicalBeanFactory interface
+	// HierarchicalBeanFactory接口的实现
 	//---------------------------------------------------------------------
 
 	@Override
@@ -945,8 +945,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
-	 * Add new BeanPostProcessors that will get applied to beans created
-	 * by this factory. To be invoked during factory configuration.
+	 * 添加新的BeanPostProcessor，它将应用于该工厂创建的bean。在出厂配置期间调用。
 	 * @since 5.3
 	 * @see #addBeanPostProcessor
 	 */
@@ -1940,19 +1939,17 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 
 	//---------------------------------------------------------------------
-	// Abstract methods to be implemented by subclasses
+	// 子类要实现的抽象方法
 	//---------------------------------------------------------------------
 
 	/**
-	 * Check if this bean factory contains a bean definition with the given name.
-	 * Does not consider any hierarchy this factory may participate in.
-	 * Invoked by {@code containsBean} when no cached singleton instance is found.
-	 * <p>Depending on the nature of the concrete bean factory implementation,
-	 * this operation might be expensive (for example, because of directory lookups
-	 * in external registries). However, for listable bean factories, this usually
-	 * just amounts to a local hash lookup: The operation is therefore part of the
-	 * public interface there. The same implementation can serve for both this
-	 * template method and the public interface method in that case.
+	 * 检查此bean工厂是否包含具有给定名称的bean定义.
+	 * 不考虑该工厂可能参与的任何层次结构。
+	 *未找到缓存的单例实例时，由{@code containsBean}调用。
+	 * <p>根据具体的bean工厂实施的性质，
+	 * 此操作可能很昂贵（例如，由于在外部注册表中进行目录查找）.
+	 * 但是，对于可列出的bean工厂，这通常只相当于本地哈希查找:
+	 * 因此，该操作是该处公共接口的一部分。在这种情况下，此模板方法和公共接口方法都可以使用相同的实现.
 	 * @param beanName the name of the bean to look for
 	 * @return if this bean factory contains a bean definition with the given name
 	 * @see #containsBean
@@ -1961,15 +1958,11 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected abstract boolean containsBeanDefinition(String beanName);
 
 	/**
-	 * Return the bean definition for the given bean name.
-	 * Subclasses should normally implement caching, as this method is invoked
-	 * by this class every time bean definition metadata is needed.
-	 * <p>Depending on the nature of the concrete bean factory implementation,
-	 * this operation might be expensive (for example, because of directory lookups
-	 * in external registries). However, for listable bean factories, this usually
-	 * just amounts to a local hash lookup: The operation is therefore part of the
-	 * public interface there. The same implementation can serve for both this
-	 * template method and the public interface method in that case.
+	 * 返回给定bean名称的bean定义。
+	 * 子类通常应实现缓存，因为每次需要bean定义元数据时，此类便会调用此方法。
+	 * <p>根据具体bean工厂实现的性质，此操作可能会很昂贵（例如，由于在外部注册表中进行目录查找）。
+	 * 但是，对于可列出的bean工厂，这通常只相当于本地哈希查找：因此，该操作是该处公共接口的一部分。
+	 * 在这种情况下，此模板方法和公共接口方法都可以使用相同的实现。
 	 * @param beanName the name of the bean to find a definition for
 	 * @return the BeanDefinition for this prototype name (never {@code null})
 	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
@@ -1982,14 +1975,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
 	/**
-	 * Create a bean instance for the given merged bean definition (and arguments).
-	 * The bean definition will already have been merged with the parent definition
-	 * in case of a child definition.
-	 * <p>All bean retrieval methods delegate to this method for actual bean creation.
-	 * @param beanName the name of the bean
-	 * @param mbd the merged bean definition for the bean
-	 * @param args explicit arguments to use for constructor or factory method invocation
-	 * @return a new instance of the bean
+	 * 为给定的合并bean定义（和参数）创建一个bean实例.
+	 * 如果有子定义，则Bean定义将与父定义合并。
+	 * <p>所有bean检索方法都委托该方法进行实际的bean创建。
+	 * @param beanName bean 的名称
+	 * @param mbd bean的合并bean定义
+	 * @param args 用于构造函数或工厂方法调用的显式参数
+	 * @return Bean的新实例
 	 * @throws BeanCreationException if the bean could not be created
 	 */
 	protected abstract Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
