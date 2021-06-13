@@ -117,9 +117,8 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Fully create a new bean instance of the given class.
-	 * <p>Performs full initialization of the bean, including all applicable
-	 * {@link BeanPostProcessor BeanPostProcessors}.
+	 * 完全创建给定类的新 bean 实例。 <p>执行bean的完全初始化,
+	 * 包括所有适用的 {@link BeanPostProcessor BeanPostProcessors}.
 	 * <p>Note: This is intended for creating a fresh instance, populating annotated
 	 * fields and methods as well as applying all standard bean initialization callbacks.
 	 * It does <i>not</i> imply traditional by-name or by-type autowiring of properties;
@@ -131,8 +130,8 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	<T> T createBean(Class<T> beanClass) throws BeansException;
 
 	/**
-	 * Populate the given bean instance through applying after-instantiation callbacks
-	 * and bean property post-processing (e.g. for annotation-driven injection).
+	 * 通过应用实例化后回调和 bean 属性后置处理器来填充给定的 bean 实例
+	 * (e.g. 用于注解驱动的注入).
 	 * <p>Note: This is essentially intended for (re-)populating annotated fields and
 	 * methods, either for new instances or for deserialized instances. It does
 	 * <i>not</i> imply traditional by-name or by-type autowiring of properties;
@@ -143,10 +142,10 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	void autowireBean(Object existingBean) throws BeansException;
 
 	/**
-	 * Configure the given raw bean: autowiring bean properties, applying
-	 * bean property values, applying factory callbacks such as {@code setBeanName}
-	 * and {@code setBeanFactory}, and also applying all bean post processors
-	 * (including ones which might wrap the given raw bean).
+	 * 配置给定的原始 bean: 自动装配 bean 属性, 接受 bean 属性值,
+	 * 接受工厂回调，例如 {@code setBeanName} 和 {@code setBeanFactory},
+	 * 并接受所有bean post processors
+	 * (包括可能包装给定的 原始Bean).
 	 * <p>This is effectively a superset of what {@link #initializeBean} provides,
 	 * fully applying the configuration specified by the corresponding bean definition.
 	 * <b>Note: This method requires a bean definition for the given name!</b>
@@ -167,11 +166,12 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Fully create a new bean instance of the given class with the specified
-	 * autowire strategy. All constants defined in this interface are supported here.
-	 * <p>Performs full initialization of the bean, including all applicable
-	 * {@link BeanPostProcessor BeanPostProcessors}. This is effectively a superset
-	 * of what {@link #autowire} provides, adding {@link #initializeBean} behavior.
+	 * 使用指定的自动装配策略完全创建给定类的新 bean 实例.
+	 * 此处支持此接口中定义的所有常量。
+	 * <p>执行 bean 的完整初始化，包括所有适用的
+	 * {@link BeanPostProcessor BeanPostProcessors}.
+	 * 这实际上是 {@link #autowire} 提供的内容的超集，
+	 * 添加 {@link #initializeBean} 行为.
 	 * @param beanClass the class of the bean to create
 	 * @param autowireMode by name or type, using the constants in this interface
 	 * @param dependencyCheck whether to perform a dependency check for objects
@@ -186,8 +186,8 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	Object createBean(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
 
 	/**
-	 * Instantiate a new bean instance of the given class with the specified autowire
-	 * strategy. All constants defined in this interface are supported here.
+	 *使用指定的自动装配策略实例化给定类的新 bean 实例.
+	 * 此处支持此接口中定义的所有常量.
 	 * Can also be invoked with {@code AUTOWIRE_NO} in order to just apply
 	 * before-instantiation callbacks (e.g. for annotation-driven injection).
 	 * <p>Does <i>not</i> apply standard {@link BeanPostProcessor BeanPostProcessors}
@@ -327,10 +327,9 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	//-------------------------------------------------------------------------
 
 	/**
-	 * Resolve the bean instance that uniquely matches the given object type, if any,
-	 * including its bean name.
-	 * <p>This is effectively a variant of {@link #getBean(Class)} which preserves the
-	 * bean name of the matching instance.
+	 * 解析唯一匹配给定对象类型的 bean 实例,
+	 * 如果有的话，包括它的bean名称。
+	 * <p>这实际上是 {@link #getBean(Class)} 的变体，它保留了匹配实例的 bean 名称.
 	 * @param requiredType type the bean must match; can be an interface or superclass
 	 * @return the bean name plus bean instance
 	 * @throws NoSuchBeanDefinitionException if no matching bean was found

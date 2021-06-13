@@ -38,10 +38,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Generic registry for shared bean instances, implementing the
- * {@link org.springframework.beans.factory.config.SingletonBeanRegistry}.
- * Allows for registering singleton instances that should be shared
- * for all callers of the registry, to be obtained via bean name.
+ * 共享 bean 实例的通用注册表,
+ * 实现 {@link org.springframework.beans.factory.config.SingletonBeanRegistry}。
+ * 允许注册应为注册表的所有调用者共享的单例实例,
+ * 通过bean名称获取
  *
  * <p>Also supports registration of
  * {@link org.springframework.beans.factory.DisposableBean} instances,
@@ -619,10 +619,9 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 
 	/**
 	 * 将单例互斥锁提供给父类和外部合作者
-	 * <p> Subclasses should synchronize on the given Object if they perform
-	 * any sort of extended singleton creation phase. In particular, subclasses
-	 * should not have their own mutexes involved in singleton creation,
-	 * to avoid the potential for deadlocks in lazy-init situations.
+	 * <p>如果子类执行任何类型的扩展单例创建阶段，它们应该在给定的对象上同步.
+	 * 特别是，子类不应该有自己的互斥体参与单例创建,
+	 * 避免在惰性初始化情况下潜在的死锁.
 	 */
 	@Override
 	public final Object getSingletonMutex() {

@@ -85,21 +85,19 @@ import org.springframework.util.StringUtils;
 import org.springframework.util.StringValueResolver;
 
 /**
- * Abstract base class for {@link org.springframework.beans.factory.BeanFactory}
- * implementations, providing the full capabilities of the
- * {@link org.springframework.beans.factory.config.ConfigurableBeanFactory} SPI.
- * Does <i>not</i> assume a listable bean factory: can therefore also be used
- * as base class for bean factory implementations which obtain bean definitions
- * from some backend resource (where bean definition access is an expensive operation).
+ * {@link org.springframework.beans.factory.BeanFactory} 实现的抽象基类,
+ * 提供 {@link org.springframework.beans.factory.config.ConfigurableBeanFactory} SPI 的全部功能.
+ * <i>不</i> 认为是一个可列举的bean factory:
+ * 因此也可以用作 bean 工厂实现的基类，这些实现从某些后端资源获取 bean 定义
+ * (其中 bean 定义访问是一项昂贵的操作).
  *
- * <p>This class provides a singleton cache (through its base class
- * {@link org.springframework.beans.factory.support.DefaultSingletonBeanRegistry},
- * singleton/prototype determination, {@link org.springframework.beans.factory.FactoryBean}
- * handling, aliases, bean definition merging for child bean definitions,
- * and bean destruction ({@link org.springframework.beans.factory.DisposableBean}
- * interface, custom destroy methods). Furthermore, it can manage a bean factory
- * hierarchy (delegating to the parent in case of an unknown bean), through implementing
- * the {@link org.springframework.beans.factory.HierarchicalBeanFactory} interface.
+ * <p>这个类提供了一个单例缓存
+ * (通过它的基类{@link org.springframework.beans.factory.support.DefaultSingletonBeanRegistry}，singleton prototype确定,
+ * {@link org.springframework.beans.factory.FactoryBean}
+ * 处理、别名、合并子 bean 定义的 bean 定义,
+ * 和 bean 销毁（{@link org.springframework.beans.factory.DisposableBean} 接口，
+ * custom destroy methods). Furthermore, 它可以管理一个 bean 工厂层次结构
+ * (在未知 bean 的情况下委托给父级), 通过实现 {@link org.springframework.beans.factory.HierarchicalBeanFactory} 接口.
  *
  * <p>The main template methods to be implemented by subclasses are
  * {@link #getBeanDefinition} and {@link #createBean}, retrieving a bean definition
@@ -332,9 +330,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 							return createBean(beanName, mbd, args);
 						}
 						catch (BeansException ex) {
-							// Explicitly remove instance from singleton cache: It might have been put there
-							// eagerly by the creation process, to allow for circular reference resolution.
-							// Also remove any beans that received a temporary reference to the bean.
+							// 从单例缓存中显式删除实例: 它可能在创建过程中急切地放在那里,
+							// 以允许循环引用解析。还删除收到对 bean 的临时引用的所有 bean.
 							destroySingleton(beanName);
 							throw ex;
 						}
