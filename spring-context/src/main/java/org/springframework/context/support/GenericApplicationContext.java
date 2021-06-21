@@ -481,7 +481,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 
 	/**
 	 * {@link RootBeanDefinition} marker subclass for {@code #registerBean} based
-	 * registrations with flexible autowiring for public constructors.
+	 * registrations with flexible autowiring for public constructors·.
 	 */
 	@SuppressWarnings("serial")
 	private static class ClassDerivedBeanDefinition extends RootBeanDefinition {

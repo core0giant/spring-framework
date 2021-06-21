@@ -116,9 +116,9 @@ public abstract class AnnotationConfigUtils {
 	 */
 	public static final String EVENT_LISTENER_FACTORY_BEAN_NAME =
 			"org.springframework.context.event.internalEventListenerFactory";
-
+	//是否存在 @Resource 注解
 	private static final boolean jsr250Present;
-
+	// 是否存在JPA
 	private static final boolean jpaPresent;
 
 	static {

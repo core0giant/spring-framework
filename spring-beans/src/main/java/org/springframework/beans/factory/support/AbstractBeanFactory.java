@@ -1942,7 +1942,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	/**
 	 * 检查此bean工厂是否包含具有给定名称的bean定义.
 	 * 不考虑该工厂可能参与的任何层次结构。
-	 *未找到缓存的单例实例时，由{@code containsBean}调用。
+	 * 未找到缓存的单例实例时，由{@code containsBean}调用。
 	 * <p>根据具体的bean工厂实施的性质，
 	 * 此操作可能很昂贵（例如，由于在外部注册表中进行目录查找）.
 	 * 但是，对于可列出的bean工厂，这通常只相当于本地哈希查找:
