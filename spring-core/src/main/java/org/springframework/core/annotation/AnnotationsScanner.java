@@ -74,7 +74,7 @@ abstract class AnnotationsScanner {
 	static <C, R> R scan(C context, AnnotatedElement source, SearchStrategy searchStrategy,
 			AnnotationsProcessor<C, R> processor) {
 
-		R result = process(context, source, searchStrategy, processor);
+ 		R result = process(context, source, searchStrategy, processor);
 		return processor.finish(result);
 	}
 
@@ -510,6 +510,12 @@ abstract class AnnotationsScanner {
 		return (type.getName().startsWith("java.") || type == Ordered.class);
 	}
 
+	/***
+	 * 表示当前类没有父类 或当前方法是私有的或当前方法所在的类没有父类
+	 * @param source
+	 * @param searchStrategy
+	 * @return
+	 */
 	private static boolean isWithoutHierarchy(AnnotatedElement source, SearchStrategy searchStrategy) {
 		if (source == Object.class) {
 			return true;

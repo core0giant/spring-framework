@@ -331,15 +331,14 @@ class DisposableBeanAdapter implements DisposableBean, Runnable, Serializable {
 
 
 	/**
-	 * If the current value of the given beanDefinition's "destroyMethodName" property is
-	 * {@link AbstractBeanDefinition#INFER_METHOD}, then attempt to infer a destroy method.
-	 * Candidate methods are currently limited to public, no-arg methods named "close" or
-	 * "shutdown" (whether declared locally or inherited). The given BeanDefinition's
-	 * "destroyMethodName" is updated to be null if no such method is found, otherwise set
-	 * to the name of the inferred method. This constant serves as the default for the
-	 * {@code @Bean#destroyMethod} attribute and the value of the constant may also be
-	 * used in XML within the {@code <bean destroy-method="">} or {@code
-	 * <beans default-destroy-method="">} attributes.
+	 * 如果给定 beanDefinition 的“destroyMethodName”属性的当前值为
+	 * {@link AbstractBeanDefinition#INFER_METHOD}, 然后尝试推断一个销毁方法.
+	 * 候选方法目前仅限于公开, 名为“close”或“shutdown”的无参数方法
+	 * （无论是在本地声明还是继承）. 如果没有找到这样的方法，给定 BeanDefinition
+	 * 的“destroyMethodName”更新为 null，否则设置
+	 * 到推断方法的名称。此常量
+	 * {@code @Bean#destroyMethod}属性和常量的值也可以在 XML
+	 * 中的 {@code <bean destroy-method="">} 或 {@code <beans default-destroy-method="">} 属性中使用.
 	 * <p>Also processes the {@link java.io.Closeable} and {@link java.lang.AutoCloseable}
 	 * interfaces, reflectively calling the "close" method on implementing beans as well.
 	 */

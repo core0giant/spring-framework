@@ -168,7 +168,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	@Nullable
 	private SecurityContextProvider securityContextProvider;
 
-	/** 从bean名称映射到合并的RootBeanDefinition. */
+	/** 从bean名称映射到合并的RootBeanDefinition,BeanDefinition 涉及合并操作. */
 	private final Map<String, RootBeanDefinition> mergedBeanDefinitions = new ConcurrentHashMap<>(256);
 
 	/** 至少已创建一次的bean的名称. */
@@ -231,6 +231,14 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
+	 * 1.判断
+	 *  1.先从自身获取
+	 *  2.再从parentFactory 获取
+	 * 2.创建
+	 * 1. 需要判断是否处于死循环依赖中
+	 * 2. 需要判断BeanDefinition 不是抽象的
+	 * 3. 如果有的dependsOn 需要先创建dependsOn的内容
+	 *
 	 * 返回一个实例，该实例可以是指定bean的共享或独立的。
 	 * @param name 要检索的bean的名称
 	 * @param requiredType 检索所需的bean类型
@@ -247,7 +255,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		String beanName = transformedBeanName(name);
 		Object beanInstance;
 
-		// Eagerly check singleton cache for manually registered singletons.
+		// 主动检查该Bean是否已经创建
 		Object sharedInstance = getSingleton(beanName);
 		if (sharedInstance != null && args == null) {
 			if (logger.isTraceEnabled()) {
@@ -330,7 +338,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 							return createBean(beanName, mbd, args);
 						}
 						catch (BeansException ex) {
-							// 从单例缓存中显式删除实例: 它可能在创建过程中急切地放在那里,
+							// 从单例缓存中显式删除实例: 它可能在创建过程中主动地放在那里,
 							// 以允许循环引用解析。还删除收到对 bean 的临时引用的所有 bean.
 							destroySingleton(beanName);
 							throw ex;
@@ -1316,8 +1324,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 
 	/**
-	 * Return a merged RootBeanDefinition, traversing the parent bean definition
-	 * if the specified bean corresponds to a child bean definition.
+	 * 返回合并的 RootBeanDefinition，
+	 * 如果指定的 bean 对应于子 bean 定义，则遍历父 bean 定义。
 	 * @param beanName the name of the bean to retrieve the merged definition for
 	 * @return a (potentially merged) RootBeanDefinition for the given bean
 	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name
@@ -1347,12 +1355,10 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
-	 * Return a RootBeanDefinition for the given bean, by merging with the
-	 * parent if the given bean's definition is a child bean definition.
-	 * @param beanName the name of the bean definition
-	 * @param bd the original bean definition (Root/ChildBeanDefinition)
-	 * @param containingBd the containing bean definition in case of inner bean,
-	 * or {@code null} in case of a top-level bean
+	 * 如果给定 bean 的定义是子 bean 定义，则通过与父级合并返回给定 bean 的 RootBeanDefinition.
+	 * @param beanName bean 定义的名称
+	 * @param bd 原始 bean 定义 (Root/ChildBeanDefinition)
+	 * @param containingBd 内部 bean 的包含 bean 定义，或在顶级 bean 的情况下 {@code null}
 	 * @return a (potentially merged) RootBeanDefinition for the given bean
 	 * @throws BeanDefinitionStoreException in case of an invalid bean definition
 	 */
@@ -1452,8 +1458,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
-	 * Check the given merged bean definition,
-	 * potentially throwing validation exceptions.
+	 * 检查给定的合并 bean 定义，可能会抛出验证异常。
+	 * 这个方法主要检查BeanDefinition 是否是抽象的
 	 * @param mbd the merged bean definition to check
 	 * @param beanName the name of the bean
 	 * @param args the arguments for bean creation, if any
@@ -1621,14 +1627,14 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 
 	/**
-	 * Predict the eventual bean type (of the processed bean instance) for the
-	 * specified bean. Called by {@link #getType} and {@link #isTypeMatch}.
-	 * Does not need to handle FactoryBeans specifically, since it is only
-	 * supposed to operate on the raw bean type.
-	 * <p>This implementation is simplistic in that it is not able to
-	 * handle factory methods and InstantiationAwareBeanPostProcessors.
-	 * It only predicts the bean type correctly for a standard bean.
-	 * To be overridden in subclasses, applying more sophisticated type detection.
+	 * 预测指定 bean 的最终 bean 类型（已处理 bean 实例的）.
+	 * 由 {@link getType} 和 {@link isTypeMatch} 调用。
+	 * 不需要专门处理 FactoryBeans，
+	 * 因为它只应该对原始 bean 类型进行操作.
+	 * <p>这个实现很简单，因为它不能处理工厂方法和
+	 * InstantiationAwareBeanPostProcessors.
+	 * 它只为标准 bean 正确预测 bean 类型.
+	 * 在子类中被覆盖，应用更复杂的类型检测.
 	 * @param beanName the name of the bean
 	 * @param mbd the merged bean definition to determine the type for
 	 * @param typesToMatch the types to match in case of internal type matching purposes
@@ -1756,7 +1762,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
-	 * Mark the specified bean as already created (or about to be created).
+	 * 将指定的 bean 标记为已创建（或即将创建）。
 	 * <p>This allows the bean factory to optimize its caching for repeated
 	 * creation of the specified bean.
 	 * @param beanName the name of the bean
@@ -1765,8 +1771,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		if (!this.alreadyCreated.contains(beanName)) {
 			synchronized (this.mergedBeanDefinitions) {
 				if (!this.alreadyCreated.contains(beanName)) {
-					// Let the bean definition get re-merged now that we're actually creating
-					// the bean... just in case some of its metadata changed in the meantime.
+					//现在我们实际上正在创建 bean，让 bean 定义重新合并
+					// ……以防万一它的一些元数据在此期间发生了变化。
 					clearMergedBeanDefinition(beanName);
 					this.alreadyCreated.add(beanName);
 				}
@@ -1901,9 +1907,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
-	 * Add the given bean to the list of disposable beans in this factory,
-	 * registering its DisposableBean interface and/or the given destroy method
-	 * to be called on factory shutdown (if applicable). Only applies to singletons.
+	 * 将给定的 bean 添加到此工厂的一次性 bean 列表中,
+	 * 注册其 DisposableBean 接口和或给定的 destroy 方法
+	 * 在工厂关闭时调用（如果适用）。仅适用于 singletons.
 	 * @param beanName the name of the bean
 	 * @param bean the bean instance
 	 * @param mbd the bean definition for the bean

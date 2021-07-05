@@ -70,17 +70,14 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
- * {@link BeanFactoryPostProcessor} used for bootstrapping processing of
+ * {@link BeanFactoryPostProcessor} used for bootstrapping processing of 用于引导处理Configuration 类
  * {@link Configuration @Configuration} classes.
  *
- * <p>Registered by default when using {@code <context:annotation-config/>} or
- * {@code <context:component-scan/>}. Otherwise, may be declared manually as
- * with any other {@link BeanFactoryPostProcessor}.
+ * <p>当使用 {@code <context:annotation-config/>} 或
+ * {@code <context:component-scan/>} 需要默认注册. 否则, 可以和其他后置处理器一样手动加载 {@link BeanFactoryPostProcessor}.
  *
- * <p>This post processor is priority-ordered as it is important that any
- * {@link Bean @Bean} methods declared in {@code @Configuration} classes have
- * their corresponding bean definitions registered before any other
- * {@code BeanFactoryPostProcessor} executes.
+ * <p>这个后处理器是优先执行的，因为在 {@code @Configuration} 类中声明的任何 {@link Bean @Bean} 方法
+ * 在任何其他 {@code BeanFactoryPostProcessor} 执行之前注册其相应的 bean 定义是很重要的。
  *
  * @author Chris Beams
  * @author Juergen Hoeller
@@ -379,9 +376,9 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
-	 * Post-processes a BeanFactory in search of Configuration class BeanDefinitions;
-	 * any candidates are then enhanced by a {@link ConfigurationClassEnhancer}.
-	 * Candidate status is determined by BeanDefinition attribute metadata.
+	 * 对 BeanFactory 进行后处理以搜索配置类 BeanDefinitions；
+	 * 然后通过 {@link ConfigurationClassEnhancer} 增强任何候选对象。
+	 * 候选状态由 BeanDefinition 属性元数据确定。
 	 * @see ConfigurationClassEnhancer
 	 */
 	public void enhanceConfigurationClasses(ConfigurableListableBeanFactory beanFactory) {

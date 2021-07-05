@@ -74,10 +74,10 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	private static final int SUPPRESSED_EXCEPTIONS_LIMIT = 100;
 
 
-	/** 单例池 */
+	/** 一级缓存 */
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
-	/** 单例对应的工厂 */
+	/** 三级缓存 */
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
 	/** 二级缓存 */
@@ -94,7 +94,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	private final Set<String> inCreationCheckExclusions =
 			Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 
-	/** 可忽略的异常 可以为空 */
+	/** 可忽略的异常 可以为空,如果有值, */
 	@Nullable
 	private Set<Exception> suppressedExceptions;
 
@@ -107,10 +107,10 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	/**在包含的Bean名称之间映射：Bean名称到Bean包含的Bean名称集。 */
 	private final Map<String, Set<String>> containedBeanMap = new ConcurrentHashMap<>(16);
 
-	/** 在相关的Bean名称之间映射：Bean名称到一组相关的Bean名称。 */
+	/** 在相关的Bean名称之间映射：key为被依赖方标准名称 value是依赖方  会解析 @DependsOn 注解,并添加进来 */
 	private final Map<String, Set<String>> dependentBeanMap = new ConcurrentHashMap<>(64);
 
-	/** 在相关的Bean名称之间进行映射：Bean名称到Bean依赖项的Bean名称集。 */
+	/** 在相关的Bean名称之间进行映射：Bean名称到Bean依赖项的Bean名称集,key 是依赖方 values 是被依赖方 会解析 @DependsOn 注解 */
 	private final Map<String, Set<String>> dependenciesForBeanMap = new ConcurrentHashMap<>(64);
 
 
@@ -341,7 +341,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
-	 * Callback before singleton creation.
+	 * 单例创建前的回调,这里本质上是加了个锁
 	 * <p>The default implementation register the singleton as currently in creation.
 	 * @param beanName the name of the singleton about to be created
 	 * @see #isSingletonCurrentlyInCreation
@@ -425,8 +425,8 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
-	 * Determine whether the specified dependent bean has been registered as
-	 * dependent on the given bean or on any of its transitive dependencies.
+	 * 确定指定的依赖 bean 是否已注册为依赖于
+	 * 给定的 bean 或其任何传递依赖项.
 	 * @param beanName the name of the bean to check
 	 * @param dependentBeanName the name of the dependent bean
 	 * @since 4.0
