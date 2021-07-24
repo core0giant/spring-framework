@@ -226,7 +226,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
-	 * Derive further bean definitions from the configuration classes in the registry.
+	 * 从注册表中的配置类派生进一步的 bean 定义,此处扫描调用 {@link AnnotationConfigApplicationContext#register} 产生的 AnnotatedBeanDefinition
 	 */
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {

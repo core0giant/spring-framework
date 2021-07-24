@@ -95,6 +95,7 @@ final class PostProcessorRegistrationDelegate {
 					beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
 			for (String ppName : postProcessorNames) {
 				if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {
+					//这里可以调用 BeanFactory.getBean 的原因是该 BeanDefinition 在 annotatedBeanDefinitionReader 创建时已经放入 BeanFactory的BeanDefinitonMap
 					currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
 					processedBeans.add(ppName);
 				}

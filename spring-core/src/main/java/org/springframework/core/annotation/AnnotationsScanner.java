@@ -481,6 +481,12 @@ abstract class AnnotationsScanner {
 		return AnnotationFilter.PLAIN.matches(annotationType);
 	}
 
+	/**
+	 * 这个方法主要判断该类上有没有需要扫描的注解,该方法调用后会形成缓存
+	 * @param source
+	 * @param searchStrategy
+	 * @return
+	 */
 	static boolean isKnownEmpty(AnnotatedElement source, SearchStrategy searchStrategy) {
 		if (hasPlainJavaAnnotationsOnly(source)) {
 			return true;

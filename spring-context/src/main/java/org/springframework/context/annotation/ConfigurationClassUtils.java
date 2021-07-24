@@ -75,9 +75,8 @@ abstract class ConfigurationClassUtils {
 
 
 	/**
-	 * 检查给定的 bean 定义是否是配置类的候选者
-	 * (或者在配置组件类中声明的嵌套组件类，也可以自动注册),
-	 * 并相应地标记它。
+	 * 检查给定的 bean 定义是否是配置类的候选者(或者在配置组件类中声明的嵌套组件类，也可以自动注册),并相应地标记它。
+	 * 这个条件成立的前提是 该BeanDefiniton 有metadata,并标记Configuration 类型为 FULL 或 Lite 并解析Order 执行顺序
 	 * @param beanDef 要检查的 bean 定义
 	 * @param metadataReaderFactory 调用者当前使用的工厂
 	 * @return 候选人是否有资格作为（任何类型的）配置类

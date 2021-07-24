@@ -471,13 +471,11 @@ public interface MergedAnnotations extends Iterable<MergedAnnotation<Annotation>
 		TYPE_HIERARCHY,
 
 		/**
-		 * Perform a full search of the entire type hierarchy on the source
-		 * <em>and</em> any enclosing classes. This strategy is similar to
-		 * {@link #TYPE_HIERARCHY} except that {@linkplain Class#getEnclosingClass()
-		 * enclosing classes} are also searched. Superclass annotations do not
-		 * need to be meta-annotated with {@link Inherited @Inherited}. When
-		 * searching a {@link Method} source, this strategy is identical to
-		 * {@link #TYPE_HIERARCHY}.
+		 * 对源<em>和<em>任何封闭类执行整个类型层次结构的完整搜索.
+		 * 此策略与 {@link TYPE_HIERARCHY} 类似，
+		 * 只是还搜索了 {@linkplain ClassgetEnclosureClass() 封闭类}.
+		 * super 注解不需要使用 {@link Inherited @Inherited} 进行元注释.
+		 * 搜索 {@link Method} 来源时，此策略与 {@link TYPE_HIERARCHY} 相同。
 		 */
 		TYPE_HIERARCHY_AND_ENCLOSING_CLASSES
 	}
