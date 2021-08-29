@@ -118,7 +118,7 @@ import org.springframework.util.StringValueResolver;
  */
 public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
 
-	/** 父bean工厂 用于Bean继承支持 */
+	/** 父bean工厂 用于BeanFactory继承支持 */
 	@Nullable
 	private BeanFactory parentBeanFactory;
 
@@ -1367,8 +1367,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			throws BeanDefinitionStoreException {
 
 		synchronized (this.mergedBeanDefinitions) {
-			RootBeanDefinition mbd = null;
-			RootBeanDefinition previous = null;
+			RootBeanDefinition mbd = null;//mbd 是最终的结果
+			RootBeanDefinition previous = null;// 这个变量是防止某些属性被Parent 覆盖,如果target type 一致 最终会把这些属性覆盖回来
 
 			// Check with full lock now in order to enforce the same merged instance.
 			if (containingBd == null) {
@@ -1628,7 +1628,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 	/**
 	 * 预测指定 bean 的最终 bean 类型（已处理 bean 实例的）.
-	 * 由 {@link getType} 和 {@link isTypeMatch} 调用。
+	 * 由 {@link #getType} 和 {@link #isTypeMatch} 调用。
 	 * 不需要专门处理 FactoryBeans，
 	 * 因为它只应该对原始 bean 类型进行操作.
 	 * <p>这个实现很简单，因为它不能处理工厂方法和

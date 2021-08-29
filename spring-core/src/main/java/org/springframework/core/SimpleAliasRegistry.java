@@ -47,10 +47,17 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	/** Map from alias to canonical name. */
+	/**
+	 * key: 别名
+	 * value: 对应的名称,可能也是别名,或最终规范名称
+	 */
 	private final Map<String, String> aliasMap = new ConcurrentHashMap<>(16);
 
 
 	@Override
+	/**
+	 * 别
+	 */
 	public void registerAlias(String name, String alias) {
 		Assert.hasText(name, "'name' must not be empty");
 		Assert.hasText(alias, "'alias' must not be empty");
@@ -122,6 +129,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	}
 
 	@Override
+	/**
+	 * 获取一个别名的所有别名,使用内部递归方法获取
+	 */
 	public String[] getAliases(String name) {
 		List<String> result = new ArrayList<>();
 		synchronized (this.aliasMap) {
@@ -131,9 +141,10 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	}
 
 	/**
+	 * 传递取回所有别名(使用递归的方式取回,最终添加到取回的List里面,不能取回被当作别名的name)
 	 * Transitively retrieve all aliases for the given name.
 	 * @param name the target name to find aliases for
-	 * @param result the resulting aliases list
+	 * @param result the resulting aliases list 结果List
 	 */
 	private void retrieveAliases(String name, List<String> result) {
 		this.aliasMap.forEach((alias, registeredName) -> {
@@ -145,10 +156,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	}
 
 	/**
-	 * Resolve all alias target names and aliases registered in this
-	 * registry, applying the given {@link StringValueResolver} to them.
-	 * <p>The value resolver may for example resolve placeholders
-	 * in target bean names and even in alias names.
+	 * 解析在此注册表中注册的所有别名目标名称和别名,
+	 * applying the given {@link StringValueResolver} to them.
+	 * <p>例如，值解析器可以解析目标 bean 名称甚至别名中的占位符。
 	 * @param valueResolver the StringValueResolver to apply
 	 */
 	public void resolveAliases(StringValueResolver valueResolver) {

@@ -16,26 +16,15 @@
 
 package org.springframework.beans.factory.support;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.BeanCreationNotAllowedException;
-import org.springframework.beans.factory.BeanCurrentlyInCreationException;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.core.SimpleAliasRegistry;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 共享 bean 实例的通用注册表,
@@ -83,7 +72,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	/** 二级缓存 */
 	private final Map<String, Object> earlySingletonObjects = new ConcurrentHashMap<>(16);
 
-	/** 注册所有单例的名称. */
+	/** 所有已经注册的单例名称. */
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
 
 	/** 是否处于创建过程中的bean */
@@ -294,6 +283,9 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	@Override
+	/**
+	 * 根据名称判断某个对象是否存在一级缓存中
+	 */
 	public boolean containsSingleton(String beanName) {
 		return this.singletonObjects.containsKey(beanName);
 	}

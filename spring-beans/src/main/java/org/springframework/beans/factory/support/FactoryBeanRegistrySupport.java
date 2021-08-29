@@ -88,7 +88,7 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 	}
 
 	/**
-	 * Obtain an object to expose from the given FactoryBean.
+	 * 从给定的 FactoryBean 获取要公开的对象。
 	 * @param factory the FactoryBean instance
 	 * @param beanName the name of the bean
 	 * @param shouldPostProcess whether the bean is subject to post-processing
@@ -102,13 +102,12 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 				Object object = this.factoryBeanObjectCache.get(beanName);
 				if (object == null) {
 					object = doGetObjectFromFactoryBean(factory, beanName);
-					// Only post-process and store if not put there already during getObject() call above
-					// (e.g. because of circular reference processing triggered by custom getBean calls)
+					// 如果在上面的 getObject() 调用期间没有放在那里，则仅进行后处理和存储
+					// (e.g. 由于自定义 getBean 调用触发的循环引用处理)
 					Object alreadyThere = this.factoryBeanObjectCache.get(beanName);
 					if (alreadyThere != null) {
 						object = alreadyThere;
-					}
-					else {
+					} else {
 						if (shouldPostProcess) {
 							if (isSingletonCurrentlyInCreation(beanName)) {
 								// 暂时返回未处理的对象，尚未存储..
