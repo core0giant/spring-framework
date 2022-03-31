@@ -89,7 +89,7 @@ public class InjectionMetadata {
 
 
 	/**
-	 * Determine whether this metadata instance needs to be refreshed.
+	 * 确定是否需要刷新此元数据实例。
 	 * @param clazz the current target class
 	 * @return {@code true} indicating a refresh, {@code false} otherwise
 	 * @since 5.2.4
@@ -150,7 +150,7 @@ public class InjectionMetadata {
 	}
 
 	/**
-	 * Check whether the given injection metadata needs to be refreshed.
+	 * 检查给定的注入元数据是否需要刷新。
 	 * @param metadata the existing metadata instance
 	 * @param clazz the current target class
 	 * @return {@code true} indicating a refresh, {@code false} otherwise

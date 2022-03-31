@@ -171,9 +171,8 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Return the default ClassLoader to use: typically the thread context
-	 * ClassLoader, if available; the ClassLoader that loaded the ClassUtils
-	 * class will be used as fallback.
+	 * 返回要使用的默认 ClassLoader：通常是线程上下文
+	 * 类加载器，如果可用；加载 ClassUtils 类的 ClassLoader 将用作后备。
 	 * <p>Call this method if you intend to use the thread context ClassLoader
 	 * in a scenario where you clearly prefer a non-null ClassLoader reference:
 	 * for example, for class path resource loading (but not necessarily for
@@ -191,18 +190,18 @@ public abstract class ClassUtils {
 			cl = Thread.currentThread().getContextClassLoader();
 		}
 		catch (Throwable ex) {
-			// Cannot access thread context ClassLoader - falling back...
+			// 无法访问线程上下文 ClassLoader - 回退...
 		}
 		if (cl == null) {
-			// No thread context class loader -> use class loader of this class.
+			// 无线程上下文类加载器 -> 使用此类的类加载器。
 			cl = ClassUtils.class.getClassLoader();
 			if (cl == null) {
-				// getClassLoader() returning null indicates the bootstrap ClassLoader
+				// getClassLoader() 返回 null 表示引导类加载器
 				try {
 					cl = ClassLoader.getSystemClassLoader();
 				}
 				catch (Throwable ex) {
-					// Cannot access system ClassLoader - oh well, maybe the caller can live with null...
+					//无法访问系统类加载器 - 哦，好吧，也许调用者可以忍受空...
 				}
 			}
 		}
@@ -1283,7 +1282,7 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Determine a corresponding interface method for the given method handle, if possible.
+	 * 如果可能，为给定的方法句柄确定相应的接口方法。
 	 * <p>This is particularly useful for arriving at a public exported type on Jigsaw
 	 * which can be reflectively invoked without an illegal access warning.
 	 * @param method the method to be invoked, potentially from an implementation class

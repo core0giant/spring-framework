@@ -88,7 +88,7 @@ public interface ConfigurablePropertyResolver extends PropertyResolver {
 	void setIgnoreUnresolvableNestedPlaceholders(boolean ignoreUnresolvableNestedPlaceholders);
 
 	/**
-	 * Specify which properties must be present, to be verified by
+	 * 指定必须存在的属性, to be verified by
 	 * {@link #validateRequiredProperties()}.
 	 */
 	void setRequiredProperties(String... requiredProperties);

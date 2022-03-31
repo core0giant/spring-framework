@@ -268,7 +268,7 @@ class ConfigurationClassParser {
 			throws IOException {
 
 		if (configClass.getMetadata().isAnnotated(Component.class.getName())) {
-			// Recursively process any member (nested) classes first
+			// 首先递归处理任何成员（嵌套）类
 			processMemberClasses(configClass, sourceClass, filter);
 		}
 

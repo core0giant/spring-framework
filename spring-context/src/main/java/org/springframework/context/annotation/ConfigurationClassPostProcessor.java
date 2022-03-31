@@ -260,7 +260,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		}
 		this.factoriesPostProcessed.add(factoryId);
 		if (!this.registriesPostProcessed.contains(factoryId)) {
-			// BeanDefinitionRegistryPostProcessor hook apparently not supported...
+			// BeanDefini  tionRegistryPostProcessor hook apparently not supported...
 			// Simply call processConfigurationClasses lazily at this point then.
 			processConfigBeanDefinitions((BeanDefinitionRegistry) beanFactory);
 		}

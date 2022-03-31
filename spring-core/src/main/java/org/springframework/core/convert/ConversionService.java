@@ -19,8 +19,8 @@ package org.springframework.core.convert;
 import org.springframework.lang.Nullable;
 
 /**
- * A service interface for type conversion. This is the entry point into the convert system.
- * Call {@link #convert(Object, Class)} to perform a thread-safe type conversion using this system.
+ * 用于类型转换的服务接口。这是转换系统的入口点。
+ * 调用 {@link #convert(Object, Class)} 以使用此系统执行线程安全的类型转换。
  *
  * @author Keith Donald
  * @author Phillip Webb
@@ -29,14 +29,13 @@ import org.springframework.lang.Nullable;
 public interface ConversionService {
 
 	/**
-	 * Return {@code true} if objects of {@code sourceType} can be converted to the {@code targetType}.
-	 * <p>If this method returns {@code true}, it means {@link #convert(Object, Class)} is capable
-	 * of converting an instance of {@code sourceType} to {@code targetType}.
-	 * <p>Special note on collections, arrays, and maps types:
-	 * For conversion between collection, array, and map types, this method will return {@code true}
-	 * even though a convert invocation may still generate a {@link ConversionException} if the
-	 * underlying elements are not convertible. Callers are expected to handle this exceptional case
-	 * when working with collections and maps.
+	 * 如果 {@code sourceType} 的对象可以转换为 {@code targetType}，则返回 {@code true}。
+	 * <p>如果此方法返回 {@code true}，则表示 {@link #convert(Object, Class)}
+	 * 能够将 {@code sourceType} 的实例转换为 {@code targetType}。
+	 * <p>关于集合、数组和映射类型的特别说明：
+	 * 对于集合、数组和映射类型之间的转换，此方法将返回 {@code true}
+	 * 即使如果基础元素不可转换，转换调用仍可能生成 {@link ConversionException}.
+	 * 使用Collection和map时,调用者应处理这种特殊情况。
 	 * @param sourceType the source type to convert from (may be {@code null} if source is {@code null})
 	 * @param targetType the target type to convert to (required)
 	 * @return {@code true} if a conversion can be performed, {@code false} if not

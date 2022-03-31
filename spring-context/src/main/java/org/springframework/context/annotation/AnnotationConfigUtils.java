@@ -60,7 +60,7 @@ import org.springframework.util.ClassUtils;
 public abstract class AnnotationConfigUtils {
 
 	/**
-	 * The bean name of the internally managed Configuration annotation processor.
+	 * 内部管理的配置注释处理器的 bean 名称。
 	 */
 	public static final String CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME =
 			"org.springframework.context.annotation.internalConfigurationAnnotationProcessor";
@@ -77,7 +77,7 @@ public abstract class AnnotationConfigUtils {
 			"org.springframework.context.annotation.internalConfigurationBeanNameGenerator";
 
 	/**
-	 * The bean name of the internally managed Autowired annotation processor.
+	 * 内部管理的 Autowired 注释处理器的 bean 名称。
 	 */
 	public static final String AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME =
 			"org.springframework.context.annotation.internalAutowiredAnnotationProcessor";
@@ -91,13 +91,13 @@ public abstract class AnnotationConfigUtils {
 			"org.springframework.context.annotation.internalRequiredAnnotationProcessor";
 
 	/**
-	 * The bean name of the internally managed JSR-250 annotation processor.
+	 * 内部管理的 JSR-250 注释处理器的 bean 名称。
 	 */
 	public static final String COMMON_ANNOTATION_PROCESSOR_BEAN_NAME =
 			"org.springframework.context.annotation.internalCommonAnnotationProcessor";
 
 	/**
-	 * The bean name of the internally managed JPA annotation processor.
+	 * 内部管理的 JPA 注释处理器的 bean 名称。
 	 */
 	public static final String PERSISTENCE_ANNOTATION_PROCESSOR_BEAN_NAME =
 			"org.springframework.context.annotation.internalPersistenceAnnotationProcessor";
@@ -106,13 +106,13 @@ public abstract class AnnotationConfigUtils {
 			"org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor";
 
 	/**
-	 * The bean name of the internally managed @EventListener annotation processor.
+	 * 内部管理的@EventListener 注解处理器的 bean 名称.
 	 */
 	public static final String EVENT_LISTENER_PROCESSOR_BEAN_NAME =
 			"org.springframework.context.event.internalEventListenerProcessor";
 
 	/**
-	 * The bean name of the internally managed EventListenerFactory.
+	 * 内部管理的 EventListenerFactory 的 bean 名称。
 	 */
 	public static final String EVENT_LISTENER_FACTORY_BEAN_NAME =
 			"org.springframework.context.event.internalEventListenerFactory";

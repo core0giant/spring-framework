@@ -22,8 +22,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.lang.Nullable;
 
 /**
- * Interface used by the {@link DefaultBeanDefinitionDocumentReader} to handle custom,
- * top-level (directly under {@code <beans/>}) tags.
+ *{@link DefaultBeanDefinitionDocumentReader}
+ * 使用的接口来处理自定义的顶级（直接在 {@code <beans>} 下）标签。
  *
  * <p>Implementations are free to turn the metadata in the custom tag into as many
  * {@link BeanDefinition BeanDefinitions} as required.

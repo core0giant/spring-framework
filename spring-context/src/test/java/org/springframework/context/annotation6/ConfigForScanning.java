@@ -16,14 +16,25 @@
 
 package org.springframework.context.annotation6;
 
+
 import org.springframework.beans.testfixture.beans.TestBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 
-@Configuration
+@Configuration(proxyBeanMethods = true)
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ConfigForScanning {
 	@Bean
 	public TestBean testBean() {
+		System.out.println("1111111");
+		return new TestBean();
+	}
+
+	@Bean
+	public TestBean testBean2(){
+		testBean();
 		return new TestBean();
 	}
 }

@@ -86,9 +86,9 @@ public class DefaultResourceLoader implements ResourceLoader {
 	}
 
 	/**
-	 * Return the ClassLoader to load class path resources with.
-	 * <p>Will get passed to ClassPathResource's constructor for all
-	 * ClassPathResource objects created by this resource loader.
+	 * 返回 ClassLoader 以加载类路径资源。
+	 * <p>将传递给由该资源加载器创建的所有 ClassPathResource 对象的 ClassPathResource 的构造函数。
+	 *
 	 * @see ClassPathResource
 	 */
 	@Override

@@ -162,11 +162,11 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	ConversionService getConversionService();
 
 	/**
-	 * Add a PropertyEditorRegistrar to be applied to all bean creation processes.
-	 * <p>Such a registrar creates new PropertyEditor instances and registers them
-	 * on the given registry, fresh for each bean creation attempt. This avoids
-	 * the need for synchronization on custom editors; hence, it is generally
-	 * preferable to use this method instead of {@link #registerCustomEditor}.
+	 * 添加要应用于所有 bean 创建过程的 PropertyEditorRegistrar。
+	 * <p>这样的注册器创建新的 PropertyEditor 实例并将它们注册到给定的注册表中，
+	 * 每次创建 bean 时都是新鲜的。这避免了在自定义编辑器上同步的需要；
+	 * 因此，通常最好使用这种方法而不是{@link #registerCustomEditor}.
+	 *
 	 * @param registrar the PropertyEditorRegistrar to register
 	 */
 	void addPropertyEditorRegistrar(PropertyEditorRegistrar registrar);

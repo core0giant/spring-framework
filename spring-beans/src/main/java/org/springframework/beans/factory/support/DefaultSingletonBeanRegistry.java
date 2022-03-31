@@ -169,22 +169,22 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
-	 * Return the (raw) singleton object registered under the given name.
-	 * <p>Checks already instantiated singletons and also allows for an early
-	 * reference to a currently created singleton (resolving a circular reference).
+	 * 返回在给定名称下注册的（原始）单例对象。
+	 * <p>检查已经实例化的单例，
+	 * 还允许对当前创建的单例进行早期引用（解决循环引用）。
 	 * @param beanName the name of the bean to look for
 	 * @param allowEarlyReference whether early references should be created or not
 	 * @return the registered singleton object, or {@code null} if none found
 	 */
 	@Nullable
 	protected Object getSingleton(String beanName, boolean allowEarlyReference) {
-		// Quick check for existing instance without full singleton lock
+		// 快速检查没有完整单例锁的现有实例
 		Object singletonObject = this.singletonObjects.get(beanName);
 		if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
 			singletonObject = this.earlySingletonObjects.get(beanName);
 			if (singletonObject == null && allowEarlyReference) {
 				synchronized (this.singletonObjects) {
-					// Consistent creation of early reference within full singleton lock
+					// 在完整的单例锁中一致地创建早期引用
 					singletonObject = this.singletonObjects.get(beanName);
 					if (singletonObject == null) {
 						singletonObject = this.earlySingletonObjects.get(beanName);
@@ -405,8 +405,8 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
-	 * Register a dependent bean for the given bean,
-	 * to be destroyed before the given bean is destroyed.
+	 * 为给定的 bean 注册一个依赖 bean，
+	 * 在给定的 bean 被销毁之前被销毁。
 	 * @param beanName the name of the bean
 	 * @param dependentBeanName the name of the dependent bean
 	 */
@@ -429,8 +429,8 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
-	 * Determine whether the specified dependent bean has been registered as
-	 * dependent on the given bean or on any of its transitive dependencies.
+	 * 确定指定的依赖 bean 是否已注册
+	 * 为依赖于给定的 bean 或其任何传递依赖项。
 	 * @param beanName the name of the bean to check
 	 * @param dependentBeanName the name of the dependent bean
 	 * @since 4.0
@@ -466,7 +466,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
-	 * Determine whether a dependent bean has been registered for the given name.
+	 * 确定是否已为给定名称注册了依赖 bean。
 	 * @param beanName the name of the bean to check
 	 */
 	protected boolean hasDependentBean(String beanName) {

@@ -62,9 +62,9 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	String CONVERSION_SERVICE_BEAN_NAME = "conversionService";
 
 	/**
-	 * Name of the LoadTimeWeaver bean in the factory. If such a bean is supplied,
-	 * the context will use a temporary ClassLoader for type matching, in order
-	 * to allow the LoadTimeWeaver to process all actual bean classes.
+	 * 工厂中 LoadTimeWeaver bean 的名称。
+	 * 如果提供了这样的 bean，则上下文将使用临时 ClassLoader 进行类型匹配，
+	 * 以允许 LoadTimeWeaver 处理所有实际的 bean 类。
 	 * @since 2.5
 	 * @see org.springframework.instrument.classloading.LoadTimeWeaver
 	 */

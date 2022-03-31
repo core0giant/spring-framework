@@ -86,18 +86,17 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Spring's default implementation of the {@link ConfigurableListableBeanFactory}
- * and {@link BeanDefinitionRegistry} interfaces: a full-fledged bean factory
- * based on bean definition metadata, extensible through post-processors.
+ * Spring 对 {@link ConfigurableListableBeanFactory}
+ * 和 {@link BeanDefinitionRegistry} 接口的默认实现：
+ * 一个基于 bean 定义元数据的成熟 bean 工厂，可通过后处理器进行扩展。
  *
- * <p>Typical usage is registering all bean definitions first (possibly read
- * from a bean definition file), before accessing beans. Bean lookup by name
- * is therefore an inexpensive operation in a local bean definition table,
- * operating on pre-resolved bean definition metadata objects.
+ * <p>典型用法是在访问 bean 之前首先注册所有 bean 定义（可能从 bean 定义文件中读取）。
+ * 因此，按名称查找 Bean 是本地 bean 定义表中的一种廉价操作，
+ * 它对预先解析的 bean 定义元数据对象进行操作。
  *
- * <p>Note that readers for specific bean definition formats are typically
- * implemented separately rather than as bean factory subclasses: see for example
- * {@link org.springframework.beans.factory.xml.XmlBeanDefinitionReader}.
+ * <p>请注意，特定 bean 定义格式的读取器通常是单独实现的，
+ * 而不是作为 bean 工厂子类：
+ * 例如参见 {@link org.springframework.beans.factory.xml.XmlBeanDefinitionReader}。
  *
  * <p>For an alternative implementation of the
  * {@link org.springframework.beans.factory.ListableBeanFactory} interface,
@@ -182,7 +181,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	@Nullable
 	private volatile String[] frozenBeanDefinitionNames;
 
-	/** Whether bean definition metadata may be cached for all beans. */
+	/** 是否可以为所有 bean 缓存 bean 定义元数据。 */
 	private volatile boolean configurationFrozen;
 
 
@@ -913,11 +912,11 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			logger.trace("Pre-instantiating singletons in " + this);
 		}
 
-		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
-		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
+		// 迭代一个副本以允许 init 方法依次注册新的 bean 定义。
+		// 虽然这可能不是常规工厂引导程序的一部分，但它确实可以正常工作。
 		List<String> beanNames = new ArrayList<>(this.beanDefinitionNames);
 
-		// Trigger initialization of all non-lazy singleton beans...
+		// 触发所有非惰性单例 bean 的初始化...
 		for (String beanName : beanNames) {
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
@@ -946,7 +945,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 		}
 
-		// Trigger post-initialization callback for all applicable beans...
+		// 为所有适用的 bean 触发初始化后回调...
 		for (String beanName : beanNames) {
 			Object singletonInstance = getSingleton(beanName);
 			if (singletonInstance instanceof SmartInitializingSingleton) {

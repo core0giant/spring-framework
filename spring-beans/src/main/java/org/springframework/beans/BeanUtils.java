@@ -118,22 +118,7 @@ public abstract class BeanUtils {
 		}
 	}
 
-	/**
-	 * Instantiate a class using its 'primary' constructor (for Kotlin classes,
-	 * potentially having default arguments declared) or its default constructor
-	 * (for regular Java classes, expecting a standard no-arg setup).
-	 * <p>Note that this method tries to set the constructor accessible
-	 * if given a non-accessible (that is, non-public) constructor.
-	 * @param clazz the class to instantiate
-	 * @return the new instance
-	 * @throws BeanInstantiationException if the bean cannot be instantiated.
-	 * The cause may notably indicate a {@link NoSuchMethodException} if no
-	 * primary/default constructor was found, a {@link NoClassDefFoundError}
-	 * or other {@link LinkageError} in case of an unresolvable class definition
-	 * (e.g. due to a missing dependency at runtime), or an exception thrown
-	 * from the constructor invocation itself.
-	 * @see Constructor#newInstance
-	 */
+
 	public static <T> T instantiateClass(Class<T> clazz) throws BeanInstantiationException {
 		Assert.notNull(clazz, "Class must not be null");
 		if (clazz.isInterface()) {

@@ -129,8 +129,8 @@ public class CglibSubclassingInstantiationStrategy extends SimpleInstantiationSt
 							"Failed to invoke constructor for CGLIB enhanced subclass [" + subclass.getName() + "]", ex);
 				}
 			}
-			// SPR-10785: set callbacks directly on the instance instead of in the
-			// enhanced class (via the Enhancer) in order to avoid memory leaks.
+			// SPR-10785: 直接在实例上设置回调
+			// 而不是在增强类中（通过增强器）以避免内存泄漏。
 			Factory factory = (Factory) instance;
 			factory.setCallbacks(new Callback[] {NoOp.INSTANCE,
 					new LookupOverrideMethodInterceptor(this.beanDefinition, this.owner),

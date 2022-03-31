@@ -50,12 +50,12 @@ public interface ConfigurableListableBeanFactory
 	void ignoreDependencyType(Class<?> type);
 
 	/**
-	 * Ignore the given dependency interface for autowiring.
-	 * <p>This will typically be used by application contexts to register
-	 * dependencies that are resolved in other ways, like BeanFactory through
-	 * BeanFactoryAware or ApplicationContext through ApplicationContextAware.
-	 * <p>By default, only the BeanFactoryAware interface is ignored.
-	 * For further types to ignore, invoke this method for each type.
+	 * 忽略给定的自动装配依赖接口。
+	 * <p>这通常由应用程序上下文用于注册以其他方式解析的依赖项，
+	 * 例如通过 BeanFactoryAware 的 BeanFactory 或通过 ApplicationContextAware
+	 * 的 ApplicationContext。
+	 * <p>默认情况下，仅忽略 BeanFactoryAware 接口。
+	 * 对于要忽略的其他类型，请为每种类型调用此方法。
 	 * @param ifc the dependency interface to ignore
 	 * @see org.springframework.beans.factory.BeanFactoryAware
 	 * @see org.springframework.context.ApplicationContextAware
@@ -63,20 +63,14 @@ public interface ConfigurableListableBeanFactory
 	void ignoreDependencyInterface(Class<?> ifc);
 
 	/**
-	 * Register a special dependency type with corresponding autowired value.
-	 * <p>This is intended for factory/context references that are supposed
-	 * to be autowirable but are not defined as beans in the factory:
-	 * e.g. a dependency of type ApplicationContext resolved to the
-	 * ApplicationContext instance that the bean is living in.
-	 * <p>Note: There are no such default types registered in a plain BeanFactory,
-	 * not even for the BeanFactory interface itself.
-	 * @param dependencyType the dependency type to register. This will typically
-	 * be a base interface such as BeanFactory, with extensions of it resolved
-	 * as well if declared as an autowiring dependency (e.g. ListableBeanFactory),
-	 * as long as the given value actually implements the extended interface.
-	 * @param autowiredValue the corresponding autowired value. This may also be an
-	 * implementation of the {@link org.springframework.beans.factory.ObjectFactory}
-	 * interface, which allows for lazy resolution of the actual target value.
+	 * 使用相应的自动装配值注册一个特殊的依赖类型。
+	 * <p>这适用于应该是可自动装配但未在工厂中定义为 bean 的工厂上下文引用：
+	 * 例如ApplicationContext 类型的依赖项解析为 bean 所在的 ApplicationContext 实例。
+	 * <p>注意：在普通 BeanFactory 中没有注册这样的默认类型，甚至 BeanFactory 接口本身也没有。
+	 * @param dependencyType 要注册的依赖类型。这通常是一个基本接口，例如 BeanFactory，
+	 * 如果声明为自动装配依赖项（例如 ListableBeanFactory），它的扩展也会被解析，只要给定的值实际上实现了扩展接口。
+	 * @param autowiredValue 对应的自动装配值。
+	 * 这也可能是 {@link org.springframework.beans.factory.ObjectFactory} 接口的实现，它允许延迟解析实际目标值。
 	 */
 	void registerResolvableDependency(Class<?> dependencyType, @Nullable Object autowiredValue);
 
@@ -149,12 +143,12 @@ public interface ConfigurableListableBeanFactory
 	boolean isConfigurationFrozen();
 
 	/**
-	 * Ensure that all non-lazy-init singletons are instantiated, also considering
+	 * 确保实例化所有非惰性初始化单例，同时考虑
 	 * {@link org.springframework.beans.factory.FactoryBean FactoryBeans}.
-	 * Typically invoked at the end of factory setup, if desired.
-	 * @throws BeansException if one of the singleton beans could not be created.
-	 * Note: This may have left the factory with some beans already initialized!
-	 * Call {@link #destroySingletons()} for full cleanup in this case.
+	 * 如果需要，通常在工厂设置结束时调用。
+	 * @throws BeansException 如果无法创建单例 bean 之一。
+	 * 注意：这可能在出厂时已经初始化了一些 bean！
+	 * 在这种情况下，调用 {@link #destroySingletons()} 进行全面清理。
 	 * @see #destroySingletons()
 	 */
 	void preInstantiateSingletons() throws BeansException;

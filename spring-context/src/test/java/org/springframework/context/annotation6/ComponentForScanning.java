@@ -16,8 +16,11 @@
 
 package org.springframework.context.annotation6;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ComponentForScanning {
+	@Autowired
+	Jsr330NamedForScanning jsr330NamedForScanning;
 }

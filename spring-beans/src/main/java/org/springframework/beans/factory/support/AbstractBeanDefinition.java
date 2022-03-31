@@ -66,7 +66,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	public static final String SCOPE_DEFAULT = "";
 
 	/**
-	 * Constant that indicates no external autowiring at all.
+	 * 表示根本没有外部自动装配的常量。
 	 * @see #setAutowireMode
 	 */
 	public static final int AUTOWIRE_NO = AutowireCapableBeanFactory.AUTOWIRE_NO;
@@ -90,11 +90,10 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	public static final int AUTOWIRE_CONSTRUCTOR = AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR;
 
 	/**
-	 * Constant that indicates determining an appropriate autowire strategy
-	 * through introspection of the bean class.
+	 * 指示通过自省 bean 类确定适当的自动装配策略的常量。
 	 * @see #setAutowireMode
-	 * @deprecated as of Spring 3.0: If you are using mixed autowiring strategies,
-	 * use annotation-based autowiring for clearer demarcation of autowiring needs.
+	 * @deprecated as of Spring 3.0: 如果您使用混合自动装配策略，
+	 * 请使用基于注释的自动装配来更清晰地划分自动装配需求。
 	 */
 	@Deprecated
 	public static final int AUTOWIRE_AUTODETECT = AutowireCapableBeanFactory.AUTOWIRE_AUTODETECT;
@@ -607,10 +606,11 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * @see #AUTOWIRE_BY_TYPE
 	 */
 	public int getResolvedAutowireMode() {
+		//3.0已弃用
 		if (this.autowireMode == AUTOWIRE_AUTODETECT) {
-			// Work out whether to apply setter autowiring or constructor autowiring.
-			// If it has a no-arg constructor it's deemed to be setter autowiring,
-			// otherwise we'll try constructor autowiring.
+			//确定是应用 setter 自动装配还是构造函数自动装配。
+			//如果它有一个无参数的构造函数，它被认为是 setter 自动装配，
+			//否则我们将尝试构造函数自动装配。
 			Constructor<?>[] constructors = getBeanClass().getConstructors();
 			for (Constructor<?> constructor : constructors) {
 				if (constructor.getParameterCount() == 0) {
@@ -785,7 +785,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
-	 * Return whether to allow access to non-public constructors and methods.
+	 * 返回是否允许访问非公共构造函数和方法。
 	 */
 	public boolean isNonPublicAccessAllowed() {
 		return this.nonPublicAccessAllowed;
@@ -894,7 +894,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
-	 * Return if there are property values defined for this bean.
+	 * 如果有为此 bean 定义的属性值，则返回。
 	 * @since 5.0.2
 	 */
 	@Override
@@ -1014,8 +1014,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
-	 * Return whether this bean definition is 'synthetic', that is,
-	 * not defined by the application itself.
+	 * 返回此 bean 定义是否是“合成的”，
+	 * 即不是由应用程序本身定义的。
 	 */
 	public boolean isSynthetic() {
 		return this.synthetic;
@@ -1129,7 +1129,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
 	public void prepareMethodOverrides() throws BeanDefinitionValidationException {
-		// Check that lookup methods exist and determine their overloaded status.
+		// 检查 lookup 方法存在 并确定他们的 overloaded status.
 		if (hasMethodOverrides()) {
 			getMethodOverrides().getOverrides().forEach(this::prepareMethodOverride);
 		}
@@ -1150,7 +1150,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 					"' on class [" + getBeanClassName() + "]");
 		}
 		else if (count == 1) {
-			// Mark override as not overloaded, to avoid the overhead of arg type checking.
+			// 将覆盖标记为不重载, 以避免 arg 类型检查的开销。
 			mo.setOverloaded(false);
 		}
 	}

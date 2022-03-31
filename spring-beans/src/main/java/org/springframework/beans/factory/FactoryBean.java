@@ -80,7 +80,7 @@ public interface FactoryBean<T> {
 	 * managed by this factory.
 	 * <p>As with a {@link BeanFactory}, this allows support for both the
 	 * Singleton and Prototype design pattern.
-	 * <p>If this FactoryBean is not fully initialized yet at the time of
+	 * <p>If this FactoryBean is not fully initialized yet at the t【ime of
 	 * the call (for example because it is involved in a circular reference),
 	 * throw a corresponding {@link FactoryBeanNotInitializedException}.
 	 * <p>As of Spring 2.0, FactoryBeans are allowed to return {@code null}

@@ -255,9 +255,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			}
 		}
 
-		// Create proxy here if we have a custom TargetSource.
-		// Suppresses unnecessary default instantiation of the target bean:
-		// The TargetSource will handle target instances in a custom fashion.
+		// 如果我们有自定义 TargetSource，请在此处创建代理。
+		// 抑制目标 bean 的不必要的默认实例化：
+		// TargetSource 将以自定义方式处理目标实例。
 		TargetSource targetSource = getCustomTargetSource(beanClass, beanName);
 		if (targetSource != null) {
 			if (StringUtils.hasLength(beanName)) {
@@ -334,10 +334,11 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			return bean;
 		}
 
-		// Create proxy if we have advice.
+		// 如果有 advice则创建代理
 		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
 		if (specificInterceptors != DO_NOT_PROXY) {
 			this.advisedBeans.put(cacheKey, Boolean.TRUE);
+			//创建代理
 			Object proxy = createProxy(
 					bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
 			this.proxyTypes.put(cacheKey, proxy.getClass());
@@ -349,10 +350,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	}
 
 	/**
-	 * Return whether the given bean class represents an infrastructure class
-	 * that should never be proxied.
-	 * <p>The default implementation considers Advices, Advisors and
-	 * AopInfrastructureBeans as infrastructure classes.
+	 * 返回给定的 bean 类是否代表一个不应该被代理的基础设施类。
+	 * <p>默认实现将 Advices、Advisors 和 AopInfrastructureBeans 视为基础架构类。
 	 * @param beanClass the class of the bean
 	 * @return whether the bean represents an infrastructure class
 	 * @see org.aopalliance.aop.Advice
@@ -372,12 +371,12 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	}
 
 	/**
-	 * Subclasses should override this method to return {@code true} if the
-	 * given bean should not be considered for auto-proxying by this post-processor.
-	 * <p>Sometimes we need to be able to avoid this happening, e.g. if it will lead to
-	 * a circular reference or if the existing target instance needs to be preserved.
-	 * This implementation returns {@code false} unless the bean name indicates an
-	 * "original instance" according to {@code AutowireCapableBeanFactory} conventions.
+	 * 如果给定的 bean 不应该被这个后处理器考虑自动代理，
+	 * 子类应该重写这个方法以返回 {@code true}。
+	 * <p>有时我们需要能够避免这种情况发生，
+	 * 例如如果它会导致循环引用或者是否需要保留现有的目标实例。
+	 * 此实现返回 {@code false} 除非 bean 名称
+	 * 根据 {@code AutowireCapableBeanFactory} 约定指示“原始实例”。
 	 * @param beanClass the class of the bean
 	 * @param beanName the name of the bean
 	 * @return whether to skip the given bean
@@ -388,10 +387,10 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	}
 
 	/**
-	 * Create a target source for bean instances. Uses any TargetSourceCreators if set.
-	 * Returns {@code null} if no custom TargetSource should be used.
-	 * <p>This implementation uses the "customTargetSourceCreators" property.
-	 * Subclasses can override this method to use a different mechanism.
+	 * 为 bean 实例创建目标源。如果设置，则使用任何 TargetSourceCreators。
+	 * 如果不应使用自定义 TargetSource，则返回 {@code null}。
+	 * <p>此实现使用“customTargetSourceCreators”属性。
+	 * 子类可以重写此方法以使用不同的机制。
 	 * @param beanClass the class of the bean to create a TargetSource for
 	 * @param beanName the name of the bean
 	 * @return a TargetSource for this bean
@@ -440,6 +439,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		ProxyFactory proxyFactory = new ProxyFactory();
 		proxyFactory.copyFrom(this);
 
+		//如果 proxy-target-class = false
 		if (!proxyFactory.isProxyTargetClass()) {
 			if (shouldProxyTargetClass(beanClass, beanName)) {
 				proxyFactory.setProxyTargetClass(true);
@@ -468,7 +468,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	}
 
 	/**
-	 * Determine whether the given bean should be proxied with its target class rather than its interfaces.
+	 * 确定给定的 bean 是否应该使用它的目标类而不是它的接口来代理。
 	 * <p>Checks the {@link AutoProxyUtils#PRESERVE_TARGET_CLASS_ATTRIBUTE "preserveTargetClass" attribute}
 	 * of the corresponding bean definition.
 	 * @param beanClass the class of the bean
@@ -567,8 +567,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 
 
 	/**
-	 * Return whether the given bean is to be proxied, what additional
-	 * advices (e.g. AOP Alliance interceptors) and advisors to apply.
+	 * 返回是否要代理给定的 bean、
+	 * 要应用哪些附加advice（例如 AOP 所有 拦截器）和advisor。
 	 * @param beanClass the class of the bean to advise
 	 * @param beanName the name of the bean
 	 * @param customTargetSource the TargetSource returned by the
